@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>About — Sichen Guo</title>
+<link rel="stylesheet" href="_ds/elizabeth-wang-portfolio-design-system-cfd53e10-6c77-4118-8aae-c8a624b3c6f6/tokens/colors.css">
+<link rel="stylesheet" href="_ds/elizabeth-wang-portfolio-design-system-cfd53e10-6c77-4118-8aae-c8a624b3c6f6/tokens/typography.css">
+<link rel="stylesheet" href="_ds/elizabeth-wang-portfolio-design-system-cfd53e10-6c77-4118-8aae-c8a624b3c6f6/tokens/spacing.css">
+<link rel="stylesheet" href="_ds/elizabeth-wang-portfolio-design-system-cfd53e10-6c77-4118-8aae-c8a624b3c6f6/styles.css">
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<script src="_ds/elizabeth-wang-portfolio-design-system-cfd53e10-6c77-4118-8aae-c8a624b3c6f6/_ds_bundle.js"></script>
+<script src="image-slot.js"></script>
+<style>
+a{color:var(--ink-1)}
+a:hover{color:var(--accent)}
+body{margin:0;background:var(--surface-page)}
+.resume-link{font-size:var(--fs-nav,14px);border:1px solid var(--line,#ddd);padding:6px 14px;text-decoration:none;white-space:nowrap}
+.resume-link:hover{border-color:var(--accent);color:var(--accent)}
+.row{display:flex;gap:20px;padding:14px 0;border-top:1px solid var(--border-default)}
+.row .yr{font-size:var(--fs-caption);color:var(--text-caption);width:96px;flex-shrink:0}
+.row .desc{font-size:var(--fs-small);color:var(--text-body)}
+</style>
+</head>
+<body>
+<div id="root"></div>
+<script type="text/babel">
+const { NavBar, Footer } = window.ElizabethWangPortfolioDesignSystem_cfd53e;
+
+function About() {
+  return (
+    <div style={{fontFamily: 'var(--font-sans)', maxWidth: 1000, margin: '0 auto', background: 'var(--surface-page)'}}>
+      <NavBar name="Sichen Guo" links={["Work","About","Contact"]} activeIndex={1} />
+      <div style={{padding: '64px 36px', display: 'grid', gridTemplateColumns: '160px 1fr', gap: 48, maxWidth: 720}}>
+        <div style={{width: 160, height: 200}}>
+          <image-slot id="about-portrait" shape="rect" placeholder="Drop portrait photo" style={{width:'100%',height:'100%'}}></image-slot>
+        </div>
+        <div>
+          <p style={{fontSize: 'var(--fs-lede)', lineHeight: 'var(--lh-lede)', letterSpacing: 'var(--tracking-tight)', margin: '0 0 16px', color: 'var(--ink-1)'}}>
+            sichen guo is a product designer with a research edge—working at the intersection of AI and human-centered design.
+          </p>
+          <p style={{fontSize: 'var(--fs-body)', lineHeight: 'var(--lh-body)', color: 'var(--text-body)', margin: 0}}>
+            she trained as an industrial designer (@harbin, @tue) before an EngD in Human-AI Interaction (@tue) pulled her into research—usability testing, cognitive walkthroughs, and LLM evaluation, alongside product design. now a UI/UX designer @dtt, based in Veldhoven, NL.
+          </p>
+        </div>
+      </div>
+      <div style={{padding: '0 36px 56px', maxWidth: 640}}>
+        <h2 style={{fontSize: 'var(--fs-h2)', fontWeight: 'var(--fw-semibold)', margin: '0 0 8px', color: 'var(--ink-1)'}}>Timeline</h2>
+        <div className="row"><span className="yr">2026—present</span><span className="desc">UI/UX Designer @dtt (DTT Multimedia), Amsterdam</span></div>
+        <div className="row"><span className="yr">2023—present</span><span className="desc">UX/AI Designer & EngD Researcher, Eindhoven Engine / @tue — Human-System Interaction</span></div>
+        <div className="row"><span className="yr">2022—2023</span><span className="desc">Product Design Intern @studio tast, Eindhoven</span></div>
+        <div className="row"><span className="yr">2021—2023</span><span className="desc">MSc Industrial Design @tue</span></div>
+        <div className="row"><span className="yr">2017—2021</span><span className="desc">BEng Industrial Design @harbin</span></div>
+      </div>
+      <div style={{padding: '0 36px 64px', maxWidth: 640}}>
+        <h2 style={{fontSize: 'var(--fs-h2)', fontWeight: 'var(--fw-semibold)', margin: '0 0 8px', color: 'var(--ink-1)'}}>Selected publications</h2>
+        <div className="row" style={{borderTop:'1px solid var(--border-default)'}}><span className="desc">Guo S. — Operationalising Mijke the Match-Bot: LLM-Powered Support for People with Limited Basic Skills. EngD Thesis, TU/e, 2026.</span></div>
+        <div className="row"><span className="desc">Guo S. et al. — Design with or Design by: Pervasive Technologies to Empower Vulnerable Populations. EAI PervasiveHealth 2025.</span></div>
+        <div className="row"><span className="desc">Dong H., Guo S. et al. — Experience-Centred Lens on Automation Surprise in Non-Critical Automated Driving. Behaviour & Information Technology, 2026.</span></div>
+        <div style={{marginTop: 20}}>
+          <a className="resume-link" href="Sichen-Guo-CV.pdf" target="_blank">Resume ↗</a>
+        </div>
+      </div>
+      <Footer name="Sichen Guo" year={2026} />
+    </div>
+  );
+}
+
+ReactDOM.createRoot(document.getElementById('root')).render(<About />);
+setTimeout(() => {
+  const map = {Work:'index.html#work',About:'about.html',Contact:'mailto:sichen.guo.work@gmail.com'};
+  document.querySelectorAll('nav a').forEach(a => { if (map[a.textContent]) a.href = map[a.textContent]; });
+}, 0);
+</script>
+</body>
+</html>

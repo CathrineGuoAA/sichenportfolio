@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mijke — Sichen Guo</title>
+<link rel="stylesheet" href="_ds/elizabeth-wang-portfolio-design-system-cfd53e10-6c77-4118-8aae-c8a624b3c6f6/tokens/colors.css">
+<link rel="stylesheet" href="_ds/elizabeth-wang-portfolio-design-system-cfd53e10-6c77-4118-8aae-c8a624b3c6f6/tokens/typography.css">
+<link rel="stylesheet" href="_ds/elizabeth-wang-portfolio-design-system-cfd53e10-6c77-4118-8aae-c8a624b3c6f6/tokens/spacing.css">
+<link rel="stylesheet" href="_ds/elizabeth-wang-portfolio-design-system-cfd53e10-6c77-4118-8aae-c8a624b3c6f6/styles.css">
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<script src="_ds/elizabeth-wang-portfolio-design-system-cfd53e10-6c77-4118-8aae-c8a624b3c6f6/_ds_bundle.js"></script>
+<script src="image-slot.js"></script>
+<style>
+a{color:var(--ink-1)}
+a:hover{color:var(--accent)}
+body{margin:0;background:var(--surface-page)}
+.wrap{padding:0 36px}
+.rail{position:fixed;right:28px;top:50%;transform:translateY(-50%);z-index:5;display:flex;flex-direction:column;gap:14px;opacity:0;pointer-events:none;transition:opacity 200ms ease}
+.rail.visible{opacity:1;pointer-events:auto}
+.rail a{display:flex;align-items:center;gap:10px;font-family:var(--font-mono);font-size:10px;letter-spacing:.06em;text-transform:uppercase;text-decoration:none;color:var(--ink-3);font-weight:400;transition:color 200ms ease,font-weight 200ms ease}
+.rail a::before{content:'';width:12px;height:1px;background:var(--line-2);transition:background 200ms ease,width 200ms ease}
+.rail a.active{color:var(--accent);font-weight:700;text-decoration:underline;text-underline-offset:3px}
+.rail a.active::before{background:var(--accent);width:20px}
+@media (max-width:1024px){.rail{display:none}}
+@media (prefers-reduced-motion:reduce){.rail,.rail a,.rail a::before{transition:none}}
+.meta{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-bottom:40px}
+.meta .lbl{font-size:var(--fs-caption);color:var(--text-caption);margin-bottom:4px}
+.meta .val{font-size:var(--fs-small);color:var(--text-body)}
+.section{padding:64px 36px;display:flex;flex-direction:column;gap:16px;border-top:1px solid var(--border-default)}
+.eyebrow{font-size:var(--fs-caption);color:var(--text-caption);text-transform:uppercase;letter-spacing:.04em;margin:0}
+.section h2{font-size:var(--fs-h2);font-weight:var(--fw-semibold);margin:0;color:var(--ink-1);max-width:640px}
+.section p{font-size:var(--fs-body);line-height:var(--lh-body);color:var(--text-body);margin:0}
+.imgblock{padding:0 36px 48px}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:8px}
+.stat .num{font-size:var(--fs-h2);font-weight:var(--fw-semibold);color:var(--ink-1)}
+.stat .lbl{font-size:var(--fs-caption);color:var(--text-caption);margin-top:4px}
+.numbered{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:8px}
+.numbered .n{font-size:var(--fs-caption);color:var(--text-caption)}
+.numbered .t{font-size:var(--fs-small);font-weight:var(--fw-semibold);color:var(--ink-1);margin:6px 0 4px}
+.numbered .d{font-size:var(--fs-caption);color:var(--text-body);line-height:1.5}
+.next{display:grid;grid-template-columns:1fr 1fr;gap:0}
+.next a{display:block;padding:32px 36px;text-decoration:none;border-top:1px solid var(--border-default)}
+.next a:nth-child(odd){border-right:1px solid var(--border-default)}
+.next .cap{font-size:var(--fs-caption);color:var(--text-caption);margin-bottom:6px}
+.next .ttl{font-size:var(--fs-h2);color:var(--ink-1)}
+@media (max-width:700px){.meta,.stats,.numbered{grid-template-columns:1fr}.next{grid-template-columns:1fr}.next a:nth-child(odd){border-right:none}}
+</style>
+</head>
+<body>
+<div id="root"></div>
+<script type="text/babel">
+const { NavBar, ArrowLink, Footer } = window.ElizabethWangPortfolioDesignSystem_cfd53e;
+
+const sections = [
+  { id: 'overview', label: 'Overview' },
+  { id: 'problem', label: 'Problem' },
+  { id: 'research', label: 'Research & design' },
+  { id: 'turn', label: 'The turn' },
+  { id: 'evaluation', label: 'Evaluation' },
+  { id: 'lessons', label: 'Lessons' },
+];
+
+function ScrollRail() {
+  const [active, setActive] = React.useState('overview');
+  const [visible, setVisible] = React.useState(false);
+  React.useEffect(() => {
+    const bodyStart = document.getElementById('overview');
+    const lessons = document.getElementById('lessons');
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(e => { if (e.isIntersecting) setActive(e.target.id); });
+    }, { rootMargin: '-40% 0px -50% 0px', threshold: 0 });
+    sections.forEach(s => { const el = document.getElementById(s.id); if (el) io.observe(el); });
+    const onScroll = () => {
+      if (!bodyStart) return;
+      const top = bodyStart.getBoundingClientRect().top;
+      const bottom = lessons ? lessons.getBoundingClientRect().bottom : Infinity;
+      setVisible(top < window.innerHeight * 0.5 && bottom > window.innerHeight * 0.2);
+    };
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+    return () => { io.disconnect(); window.removeEventListener('scroll', onScroll); };
+  }, []);
+  const onClick = (e, id) => {
+    e.preventDefault();
+    const el = document.getElementById(id);
+    if (el) el.scrollIntoView({ behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth', block: 'start' });
+  };
+  return (
+    <nav className={"rail" + (visible ? " visible" : "")} aria-label="Case study sections">
+      {sections.map(s => (
+        <a key={s.id} href={"#" + s.id} className={active === s.id ? 'active' : ''} onClick={(e) => onClick(e, s.id)}>{s.label}</a>
+      ))}
+    </nav>
+  );
+}
+
+function CaseStudy() {
+  return (
+    <div style={{fontFamily: 'var(--font-sans)', maxWidth: 1000, margin: '0 auto', background: 'var(--surface-page)'}}>
+      <NavBar name="Sichen Guo" links={["Work","About","Contact"]} activeIndex={-1} />
+      <ScrollRail />
+
+      <div className="wrap" style={{padding: '56px 36px 40px'}}>
+        <ArrowLink direction="up">Back to projects</ArrowLink>
+        <h1 style={{fontSize: 'var(--fs-h1)', fontWeight: 'var(--fw-semibold)', letterSpacing: 'var(--tracking-tight)', margin: '20px 0 8px', color: 'var(--ink-1)'}}>Mijke</h1>
+        <p style={{fontSize: 'var(--fs-lede)', lineHeight: 'var(--lh-lede)', color: 'var(--text-muted)', margin: '0 0 32px'}}>
+          an AI-powered guidance tool helping people with limited literacy navigate Dutch social services through conversation, not forms.
+        </p>
+        <div className="meta">
+          <div><div className="lbl">Role</div><div className="val">UX/AI Designer & EngD Researcher</div></div>
+          <div><div className="lbl">Team</div><div className="val">Cross-functional squad — engineers, domain experts, policymakers</div></div>
+          <div><div className="lbl">Timeline</div><div className="val">Sep 2023 — present</div></div>
+        </div>
+      </div>
+
+      <div className="imgblock"><div style={{aspectRatio: '16/9'}}><image-slot id="mijke-hero" shape="rect" placeholder="Drop product screenshot" style={{width:'100%',height:'100%'}}></image-slot></div></div>
+
+      <div id="overview" className="section">
+        <p className="eyebrow">Overview</p>
+        <h2>Making social services reachable in plain conversation</h2>
+        <p>About 3 million adults in the Netherlands have low literacy and struggle to navigate social services through forms and category menus. Mijke is a chatbot that lets them ask for help in plain conversation instead.</p>
+        <p>Getting the bot to respond wasn't the hard part — knowing whether its responses were good enough to act on was. That question shaped most of the project.</p>
+      </div>
+
+      <div id="problem" className="section">
+        <p className="eyebrow">Problem</p>
+        <h2>Comprehension was the assumed barrier</h2>
+        <p>The starting hypothesis was that low-literacy users struggled with the language social services used — dense, formal, hard to parse. Mijke's first job was to translate that language into something conversational.</p>
+      </div>
+
+      <div id="research" className="section">
+        <p className="eyebrow">Research & design</p>
+        <h2>Testing that assumption with real users</h2>
+        <p>I led user research and interaction design for the tool: structured interviews, usability tests, and cognitive walkthroughs with around 15 social practitioners. From that, I defined the information architecture and conversational flows for an LLM-driven interface, translating AI outputs into interaction patterns validated through testing, and iterated high-fidelity prototypes in Figma.</p>
+        <div className="numbered">
+          <div><div className="n">01</div><div className="t">Structured interviews</div><div className="d">With social practitioners who support low-literacy clients day to day.</div></div>
+          <div><div className="n">02</div><div className="t">Usability testing</div><div className="d">Task-based sessions on the conversational flow, not just the copy.</div></div>
+          <div><div className="n">03</div><div className="t">Cognitive walkthroughs</div><div className="d">Step-by-step review of where users hesitated or dropped off.</div></div>
+        </div>
+      </div>
+
+      <div id="turn" className="section">
+        <p className="eyebrow">The turn</p>
+        <h2>Task performance rose. Accuracy didn't.</h2>
+        <p>Phase 1 testing showed task performance rising sharply while accuracy stayed flat. That gap pointed away from the assumption we'd started with — that the barrier was comprehension — and toward the real one: anxiety about engaging with the letter at all. That reframed the design direction, from simplifying language toward reducing anxiety and building trust before comprehension could even matter.</p>
+      </div>
+
+      <div className="imgblock"><div style={{aspectRatio: '16/10'}}><image-slot id="mijke-matcheval" shape="rect" placeholder="Drop MatchEval screenshot" style={{width:'100%',height:'100%'}}></image-slot></div></div>
+
+      <div id="evaluation" className="section">
+        <p className="eyebrow">Evaluation</p>
+        <h2>MatchEval: judging the AI, not just the interface</h2>
+        <p>Design decisions about an LLM-driven tool needed a way to check whether its answers were actually good enough to act on. I built MatchEval, an LLM-as-judge platform that scores live conversations against five criteria defined with practitioners.</p>
+        <div className="stats">
+          <div className="stat"><div className="num">54%</div><div className="lbl">ground-truth match rate, latest run</div></div>
+          <div className="stat"><div className="num">28</div><div className="lbl">conversations evaluated</div></div>
+          <div className="stat"><div className="num">699</div><div className="lbl">organisations in the reference dataset</div></div>
+        </div>
+        <p>The result also shows where the system actually falls short: accuracy and trust, not language clarity — the gap the design work now needs to close.</p>
+      </div>
+
+      <div id="lessons" className="section">
+        <p className="eyebrow">Lessons</p>
+        <h2>Collaboration and where this stands</h2>
+        <p>The work ran inside a cross-functional Agile squad with engineers, domain experts, and policymakers — sprint planning, demos, and backlog refinement, not a solo design track.</p>
+        <p>This is ongoing EngD research at TU/e. The full account is written up in my thesis, <a href="https://www.tue.nl/en/news-and-events/news-overview/08-03-2026-a-new-way-to-navigate-social-services-with-everyday-language" target="_blank">Operationalising Mijke the Match-Bot</a> (TU/e, March 2026).</p>
+      </div>
+
+      <div className="next">
+        <a href="#"><div className="cap">Next project</div><div className="ttl">AI Text Simplification</div></a>
+        <a href="#"><div className="cap">Next project</div><div className="ttl">MediaMasters</div></a>
+      </div>
+
+      <Footer name="Sichen Guo" year={2026} />
+    </div>
+  );
+}
+
+ReactDOM.createRoot(document.getElementById('root')).render(<CaseStudy />);
+setTimeout(() => {
+  const map = {Work:'index.html#work',About:'about.html',Contact:'mailto:sichen.guo.work@gmail.com'};
+  document.querySelectorAll('nav a').forEach(a => { if (map[a.textContent]) a.href = map[a.textContent]; });
+  document.querySelectorAll('a').forEach(a => { if (a.textContent === 'Back to projects') a.href = 'index.html#work'; });
+}, 0);
+</script>
+</body>
+</html>

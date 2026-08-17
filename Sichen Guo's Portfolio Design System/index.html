@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sichen Guo — Product Designer</title>
+<link rel="stylesheet" href="_ds/elizabeth-wang-portfolio-design-system-cfd53e10-6c77-4118-8aae-c8a624b3c6f6/tokens/colors.css">
+<link rel="stylesheet" href="_ds/elizabeth-wang-portfolio-design-system-cfd53e10-6c77-4118-8aae-c8a624b3c6f6/tokens/typography.css">
+<link rel="stylesheet" href="_ds/elizabeth-wang-portfolio-design-system-cfd53e10-6c77-4118-8aae-c8a624b3c6f6/tokens/spacing.css">
+<link rel="stylesheet" href="_ds/elizabeth-wang-portfolio-design-system-cfd53e10-6c77-4118-8aae-c8a624b3c6f6/styles.css">
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<script src="_ds/elizabeth-wang-portfolio-design-system-cfd53e10-6c77-4118-8aae-c8a624b3c6f6/_ds_bundle.js"></script>
+<script src="image-slot.js"></script>
+<style>
+a{color:var(--ink-1)}
+a:hover{color:var(--accent)}
+body{margin:0;background:var(--surface-page)}
+.resume-link{font-size:var(--fs-nav,14px);border:1px solid var(--line,#ddd);padding:6px 14px;text-decoration:none;white-space:nowrap}
+.resume-link:hover{border-color:var(--accent);color:var(--accent)}
+.wip-overlay{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:var(--ink-1,#1a1a1a);opacity:0;transition:opacity 200ms ease}
+.wip-overlay span{font-family:var(--font-mono);font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:#fff}
+.wip-card:hover .wip-overlay{opacity:.9}
+@media (prefers-reduced-motion:reduce){.wip-overlay{transition:none}}
+</style>
+</head>
+<body>
+<div id="root"></div>
+<script type="text/babel">
+const { NavBar, ProjectCard, AnnotatedWord, ArrowLink, Footer } = window.ElizabethWangPortfolioDesignSystem_cfd53e;
+
+const projects = [
+  { id: 'p1', caption: 'Mijke—AI guidance tool for people with limited literacy, evaluated with MatchEval', slot: 'thumb-1', href: 'case-study-mijke.html' },
+  { id: 'p2', caption: 'AI Text Simplification—Making institutional text legible for low-literacy readers', slot: 'thumb-2', href: '#' },
+  { id: 'p3', caption: 'MediaMasters—Web teaching simulation used in 3,500+ Dutch primary schools', slot: 'thumb-3', href: '#' },
+];
+
+function Home() {
+  return (
+    <div style={{fontFamily: 'var(--font-sans)', maxWidth: 1000, margin: '0 auto', background: 'var(--surface-page)'}}>
+      <NavBar name="Sichen Guo" links={["Work","About","Contact"]} activeIndex={-1} />
+      <div id="work" style={{padding: '80px 36px 60px', maxWidth: 680}}>
+        <div style={{width: 92, height: 116, marginBottom: 28}}>
+          <image-slot id="portrait" shape="rect" placeholder="Drop portrait photo" style={{width:'100%',height:'100%'}}></image-slot>
+        </div>
+        <p style={{fontSize: 'var(--fs-lede)', lineHeight: 'var(--lh-lede)', letterSpacing: 'var(--tracking-tight)', margin: '0 0 8px', color: 'var(--ink-1)'}}>
+          sichen guo is a product <AnnotatedWord>designer</AnnotatedWord> with a research edge—working at the intersection of AI and human-centered design.
+        </p>
+        <p style={{fontSize: 'var(--fs-lede)', lineHeight: 'var(--lh-lede)', letterSpacing: 'var(--tracking-tight)', margin: '0 0 24px', color: 'var(--ink-1)'}}>
+          currently a UI/UX designer Intern <a href="#">@DTT</a>, and UX researcher <a href="https://eindhovenengine.nl/">@Eindhoven Engine</a>, based in Veldhoven, NL. Also an EngD in Human-AI Interaction <a href="#">@Eindhoven University of Technology</a>.
+        </p>
+        <div style={{display: 'flex', alignItems: 'center', gap: 20, flexWrap: 'wrap'}}>
+          <ArrowLink direction="down">Explore a few featured projects</ArrowLink>
+          <a className="resume-link" href="Sichen-Guo-CV.pdf" target="_blank">Resume ↗</a>
+        </div>
+      </div>
+      <div style={{display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 1, background: 'var(--line,#ddd)', border: '1px solid var(--line,#ddd)'}}>
+        {projects.map(p => (
+          <div key={p.id} style={{display:'contents'}}>
+            <ProjectCardSlot caption={p.caption} slotId={p.slot} href={p.href} />
+          </div>
+        ))}
+      </div>
+      <Footer name="Sichen Guo" year={2026} />
+    </div>
+  );
+}
+
+function ProjectCardSlot({ caption, slotId, href }) {
+  const wip = !href || href === '#';
+  const Tag = wip ? 'div' : 'a';
+  return (
+    <Tag {...(wip ? {} : {href})} className={wip ? 'wip-card' : ''} style={{display:'block',textDecoration:'none',background:'var(--surface-page,#fff)',position:'relative',cursor: wip ? 'default' : 'pointer'}}>
+      <div style={{width: '100%', aspectRatio: '16/10', position:'relative', overflow:'hidden'}}>
+        <image-slot id={slotId} shape="rect" placeholder="Drop project thumbnail" style={{width:'100%',height:'100%'}}></image-slot>
+        {wip && <div className="wip-overlay"><span>Work in progress</span></div>}
+      </div>
+      <div style={{padding: '12px 14px', fontSize: 'var(--fs-caption,13px)', color: 'var(--ink-2,#555)'}}>{caption}</div>
+    </Tag>
+  );
+}
+
+ReactDOM.createRoot(document.getElementById('root')).render(<Home />);
+setTimeout(() => {
+  const map = {Work:'#work',About:'about.html',Contact:'mailto:sichen.guo.work@gmail.com'};
+  document.querySelectorAll('nav a').forEach(a => { if (map[a.textContent]) a.href = map[a.textContent]; });
+}, 0);
+</script>
+</body>
+</html>
