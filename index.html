@@ -31,9 +31,9 @@ body{margin:0;background:var(--surface-page)}
 const { NavBar, ProjectCard, AnnotatedWord, ArrowLink, Footer } = window.ElizabethWangPortfolioDesignSystem_cfd53e;
 
 const projects = [
-  { id: 'p1', caption: 'Mijke—AI guidance tool for people with limited literacy, evaluated with MatchEval', slot: 'thumb-1', href: 'case-study-mijke.html' },
-  { id: 'p2', caption: 'AI Text Simplification—Making institutional text legible for low-literacy readers', slot: 'thumb-2', href: '#' },
-  { id: 'p3', caption: 'MediaMasters—Web teaching simulation used in 3,500+ Dutch primary schools', slot: 'thumb-3', href: '#' },
+  { id: 'p1', caption: 'Mijke—AI guidance tool for people with limited literacy, evaluated with MatchEval', slot: 'thumb-1', src: 'uploads/slot-thumb-1.webp', href: 'case-study-mijke.html' },
+  { id: 'p2', caption: 'AI Text Simplification—Making institutional text legible for low-literacy readers', slot: 'thumb-2', src: 'uploads/slot-thumb-2.webp', href: '#' },
+  { id: 'p3', caption: 'MediaMasters—Web teaching simulation used in 3,500+ Dutch primary schools', slot: 'thumb-3', src: 'uploads/slot-thumb-3.webp', href: '#' },
 ];
 
 function Home() {
@@ -42,7 +42,7 @@ function Home() {
       <NavBar name="Sichen Guo" links={["Work","About","Contact"]} activeIndex={-1} />
       <div id="work" style={{padding: '80px 36px 60px', maxWidth: 680}}>
         <div style={{width: 92, height: 116, marginBottom: 28}}>
-          <image-slot id="portrait" shape="rect" placeholder="Drop portrait photo" style={{width:'100%',height:'100%'}}></image-slot>
+          <image-slot id="portrait" src="uploads/slot-portrait.webp" shape="rect" placeholder="Drop portrait photo" style={{width:'100%',height:'100%'}}></image-slot>
         </div>
         <p style={{fontSize: 'var(--fs-lede)', lineHeight: 'var(--lh-lede)', letterSpacing: 'var(--tracking-tight)', margin: '0 0 8px', color: 'var(--ink-1)'}}>
           sichen guo is a product <AnnotatedWord>designer</AnnotatedWord> with a research edge—working at the intersection of AI and human-centered design.
@@ -58,7 +58,7 @@ function Home() {
       <div style={{display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 1, background: 'var(--line,#ddd)', border: '1px solid var(--line,#ddd)'}}>
         {projects.map(p => (
           <div key={p.id} style={{display:'contents'}}>
-            <ProjectCardSlot caption={p.caption} slotId={p.slot} href={p.href} />
+            <ProjectCardSlot caption={p.caption} slotId={p.slot} slotSrc={p.src} href={p.href} />
           </div>
         ))}
       </div>
@@ -67,13 +67,13 @@ function Home() {
   );
 }
 
-function ProjectCardSlot({ caption, slotId, href }) {
+function ProjectCardSlot({ caption, slotId, slotSrc, href }) {
   const wip = !href || href === '#';
   const Tag = wip ? 'div' : 'a';
   return (
     <Tag {...(wip ? {} : {href})} className={wip ? 'wip-card' : ''} style={{display:'block',textDecoration:'none',background:'var(--surface-page,#fff)',position:'relative',cursor: wip ? 'default' : 'pointer'}}>
       <div style={{width: '100%', aspectRatio: '16/10', position:'relative', overflow:'hidden'}}>
-        <image-slot id={slotId} shape="rect" placeholder="Drop project thumbnail" style={{width:'100%',height:'100%'}}></image-slot>
+        <image-slot id={slotId} src={slotSrc} shape="rect" placeholder="Drop project thumbnail" style={{width:'100%',height:'100%'}}></image-slot>
         {wip && <div className="wip-overlay"><span>Work in progress</span></div>}
       </div>
       <div style={{padding: '12px 14px', fontSize: 'var(--fs-caption,13px)', color: 'var(--ink-2,#555)'}}>{caption}</div>
