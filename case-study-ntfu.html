@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>NTFU — Sichen Guo</title>
+<link rel="stylesheet" href="_ds/elizabeth-wang-portfolio-design-system-cfd53e10-6c77-4118-8aae-c8a624b3c6f6/tokens/colors.css">
+<link rel="stylesheet" href="_ds/elizabeth-wang-portfolio-design-system-cfd53e10-6c77-4118-8aae-c8a624b3c6f6/tokens/typography.css">
+<link rel="stylesheet" href="_ds/elizabeth-wang-portfolio-design-system-cfd53e10-6c77-4118-8aae-c8a624b3c6f6/tokens/spacing.css">
+<link rel="stylesheet" href="_ds/elizabeth-wang-portfolio-design-system-cfd53e10-6c77-4118-8aae-c8a624b3c6f6/styles.css">
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<script src="_ds/elizabeth-wang-portfolio-design-system-cfd53e10-6c77-4118-8aae-c8a624b3c6f6/_ds_bundle.js"></script>
+<script src="image-slot.js"></script>
+<style>
+a{color:var(--ink-1)}
+a:hover{color:var(--accent)}
+body{margin:0;background:var(--surface-page)}
+.wrap{padding:0 36px}
+.rail{position:fixed;right:28px;top:50%;transform:translateY(-50%);z-index:5;display:flex;flex-direction:column;gap:14px;opacity:0;pointer-events:none;transition:opacity 200ms ease}
+.rail.visible{opacity:1;pointer-events:auto}
+.rail a{display:flex;align-items:center;gap:10px;font-family:var(--font-mono);font-size:10px;letter-spacing:.06em;text-transform:uppercase;text-decoration:none;color:var(--ink-3);font-weight:400;transition:color 200ms ease}
+.rail a::before{content:'';width:16px;height:1px;background:var(--line-2);transition:background 200ms ease;flex-shrink:0}
+.rail a.active{color:var(--accent);text-decoration:underline;text-underline-offset:3px}
+.rail a.active::before{background:var(--accent)}
+@media (max-width:1024px){.rail{display:none}}
+@media (prefers-reduced-motion:reduce){.rail,.rail a,.rail a::before{transition:none}}
+.status{display:inline-flex;align-items:center;gap:8px;font-size:var(--fs-caption);color:var(--text-caption);border:1px solid var(--border-default);border-radius:999px;padding:6px 14px;margin-bottom:24px}
+.status .dot{width:7px;height:7px;border-radius:50%;background:var(--accent)}
+.meta{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-bottom:40px}
+.meta .lbl{font-size:var(--fs-caption);color:var(--text-caption);margin-bottom:4px}
+.meta .val{font-size:var(--fs-small);color:var(--text-body)}
+.section{padding:64px 36px;display:flex;flex-direction:column;gap:16px;border-top:1px solid var(--border-default)}
+.eyebrow{font-size:var(--fs-caption);color:var(--text-caption);text-transform:uppercase;letter-spacing:.04em;margin:0}
+.section h2{font-size:var(--fs-h2);font-weight:var(--fw-semibold);margin:0;color:var(--ink-1);max-width:640px}
+.section p{font-size:var(--fs-body);line-height:var(--lh-body);color:var(--text-body);margin:0}
+.imgblock{padding:0 36px 48px}
+.numbered{display:grid;grid-template-columns:repeat(2,1fr);gap:24px;margin-top:8px}
+.numbered .n{font-size:var(--fs-caption);color:var(--text-caption)}
+.numbered .t{font-size:var(--fs-small);font-weight:var(--fw-semibold);color:var(--ink-1);margin:6px 0 4px}
+.numbered .d{font-size:var(--fs-caption);color:var(--text-body);line-height:1.5}
+.outcome{margin:0;padding-left:20px;display:flex;flex-direction:column;gap:10px}
+.outcome li{font-size:var(--fs-body);line-height:var(--lh-body);color:var(--text-body)}
+.next{display:grid;grid-template-columns:1fr 1fr;gap:0}
+.next a{display:block;padding:32px 36px;text-decoration:none;border-top:1px solid var(--border-default)}
+.next a:nth-child(odd){border-right:1px solid var(--border-default)}
+.next .cap{font-size:var(--fs-caption);color:var(--text-caption);margin-bottom:6px}
+.next .ttl{font-size:var(--fs-h2);color:var(--ink-1)}
+@media (max-width:700px){.meta,.numbered{grid-template-columns:1fr}.next{grid-template-columns:1fr}.next a:nth-child(odd){border-right:none}}
+</style>
+</head>
+<body>
+<div id="root"></div>
+<script type="text/babel">
+const { NavBar, ArrowLink, Footer } = window.ElizabethWangPortfolioDesignSystem_cfd53e;
+
+const sections = [
+  { id: 'overview', label: 'Overview' },
+  { id: 'constraint', label: 'Constraint' },
+  { id: 'rsvp', label: 'The RSVP call' },
+  { id: 'ownership', label: 'Whose event' },
+  { id: 'friction', label: 'Registration' },
+  { id: 'outcome', label: 'Outcome' },
+];
+
+function ScrollRail() {
+  const [active, setActive] = React.useState('overview');
+  const [visible, setVisible] = React.useState(false);
+  React.useEffect(() => {
+    const bodyStart = document.getElementById('overview');
+    const last = document.getElementById('outcome');
+    const els = sections.map(s => document.getElementById(s.id)).filter(Boolean);
+    let raf = null;
+    const compute = () => {
+      const line = window.innerHeight * 0.45;
+      let current = els[0] ? els[0].id : 'overview';
+      for (const el of els) {
+        if (el.getBoundingClientRect().top <= line) current = el.id;
+      }
+      setActive(current);
+      if (bodyStart) {
+        const top = bodyStart.getBoundingClientRect().top;
+        const bottom = last ? last.getBoundingClientRect().bottom : Infinity;
+        setVisible(top < window.innerHeight * 0.5 && bottom > window.innerHeight * 0.2);
+      }
+    };
+    const onScroll = () => {
+      if (raf) return;
+      raf = requestAnimationFrame(() => { raf = null; compute(); });
+    };
+    window.addEventListener('scroll', onScroll, { passive: true });
+    compute();
+    return () => { window.removeEventListener('scroll', onScroll); if (raf) cancelAnimationFrame(raf); };
+  }, []);
+  const onClick = (e, id) => {
+    e.preventDefault();
+    const el = document.getElementById(id);
+    if (el) el.scrollIntoView({ behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth', block: 'start' });
+  };
+  return (
+    <nav className={"rail" + (visible ? " visible" : "")} aria-label="Case study sections">
+      {sections.map(s => (
+        <a key={s.id} href={"#" + s.id} className={active === s.id ? 'active' : ''} onClick={(e) => onClick(e, s.id)}>{s.label}</a>
+      ))}
+    </nav>
+  );
+}
+
+const NTFU_PASSWORD = '1209';
+
+function PasswordGate({ onUnlock }) {
+  const [value, setValue] = React.useState('');
+  const [error, setError] = React.useState(false);
+  const submit = (e) => {
+    e.preventDefault();
+    if (value === NTFU_PASSWORD) { sessionStorage.setItem('ntfu-unlocked', '1'); onUnlock(); }
+    else setError(true);
+  };
+  return (
+    <div style={{fontFamily: 'var(--font-sans)', maxWidth: 1000, margin: '0 auto', background: 'var(--surface-page)', minHeight: '100vh'}}>
+      <NavBar name="Sichen Guo" links={["Work","About","Contact"]} activeIndex={-1} />
+      <div className="wrap" style={{padding: '96px 36px', display: 'flex', flexDirection: 'column', gap: 16, maxWidth: 440}}>
+        <ArrowLink direction="up">Back to projects</ArrowLink>
+        <h1 style={{fontSize: 'var(--fs-h1)', fontWeight: 'var(--fw-semibold)', margin: '20px 0 8px', color: 'var(--ink-1)'}}>NTFU — Fietssport App</h1>
+        <p style={{fontSize: 'var(--fs-body)', lineHeight: 'var(--lh-body)', color: 'var(--text-body)', margin: '0 0 8px'}}>This is a client project for DTT Multimedia under NDA. It becomes public a year after development — until then, this page is password-protected. Reach out if you'd like access for a review.</p>
+        <form onSubmit={submit} style={{display: 'flex', gap: 8}}>
+          <input type="password" value={value} onChange={e => {setValue(e.target.value); setError(false);}} placeholder="Password" style={{flex: 1, padding: '10px 12px', border: '1px solid var(--border-default)', fontSize: 'var(--fs-body)', fontFamily: 'var(--font-sans)', background: 'var(--surface-page)', color: 'var(--ink-1)'}} />
+          <button type="submit" style={{padding: '10px 18px', border: '1px solid var(--ink-1)', background: 'var(--ink-1)', color: 'var(--surface-page)', fontSize: 'var(--fs-body)', fontFamily: 'var(--font-sans)', cursor: 'pointer'}}>Enter</button>
+        </form>
+        {error && <p style={{color: 'var(--accent)', fontSize: 'var(--fs-caption)', margin: 0}}>Incorrect password.</p>}
+      </div>
+      <Footer name="Sichen Guo" year={2026} />
+    </div>
+  );
+}
+
+function CaseStudy() {
+  const [unlocked, setUnlocked] = React.useState(() => sessionStorage.getItem('ntfu-unlocked') === '1');
+  if (!unlocked) return <PasswordGate onUnlock={() => setUnlocked(true)} />;
+  return (
+    <div style={{fontFamily: 'var(--font-sans)', maxWidth: 1000, margin: '0 auto', background: 'var(--surface-page)'}}>
+      <NavBar name="Sichen Guo" links={["Work","About","Contact"]} activeIndex={-1} />
+      <ScrollRail />
+
+      <div className="wrap" style={{padding: '56px 36px 40px'}}>
+        <ArrowLink direction="up">Back to projects</ArrowLink>
+        <h1 style={{fontSize: 'var(--fs-h1)', fontWeight: 'var(--fw-semibold)', letterSpacing: 'var(--tracking-tight)', margin: '20px 0 8px', color: 'var(--ink-1)'}}>NTFU — Fietssport App</h1>
+        <p style={{fontSize: 'var(--fs-lede)', lineHeight: 'var(--lh-lede)', color: 'var(--text-muted)', margin: '0 0 20px'}}>
+          Getting a club cyclist from "I want to ride this" to "I'm signed up" in as few decisions as possible.
+        </p>
+        <div className="status"><span className="dot"></span>Design complete for Phase 2, currently with the client for feedback — development has started in parallel</div>
+        <div className="meta">
+          <div><div className="lbl">Role</div><div className="val">UI/UX Designer, DTT Multimedia (client project)</div></div>
+          <div><div className="lbl">Timeline</div><div className="val">2026, Phase 2 (ongoing)</div></div>
+          <div><div className="lbl">Tools</div><div className="val">Figma, dev handoff via Figma Dev Mode</div></div>
+        </div>
+      </div>
+
+      <div className="imgblock"><div style={{aspectRatio: '16/9'}}><image-slot id="ntfu-home" shape="rect" placeholder="Drop: Home screen — upcoming events, favourite events, club rides" style={{width:'100%',height:'100%'}}></image-slot></div></div>
+
+      <div id="overview" className="section">
+        <p className="eyebrow">Overview</p>
+        <h2>NTFU is the Dutch national federation for recreational and sport cycling</h2>
+        <p>Hundreds of affiliated clubs, each organising their own rides, alongside a calendar of open public events any member can join. Phase 2 of the app centres on one core job: helping a member find a ride and actually get signed up for it, without the process itself becoming the reason they don't bother.</p>
+        <p>Client-owned research (an 84-club survey plus two working sessions with 15 clubs) defined the functional scope; my role was analysing those requirements and designing the interaction flows and screens for Phase 2, focused on club ride planning and event registration.</p>
+      </div>
+
+      <div id="constraint" className="section">
+        <p className="eyebrow">The constraint that shaped everything</p>
+        <h2>The dashboard is client-owned. The app has no independent source of truth.</h2>
+        <p>NTFU's dashboard — where clubs manage their own rides, recurring events, and sub-groups — is entirely client-owned and built separately. The app can only ever surface what the dashboard produces; it has no independent source of truth for club-created content. That single constraint runs through the whole of Phase 2: every screen that shows club-managed information (recurring rides, sub-groups, club rosters) had to be designed as a read-only mirror of dashboard data, while everything a member does inside the app — registering for an event, marking attendance, browsing routes — had to work as a complete, self-contained flow that doesn't assume the dashboard is one tap away.</p>
+      </div>
+
+      <div id="rsvp" className="section">
+        <p className="eyebrow">The hardest call</p>
+        <h2>When does "yes" not need a form?</h2>
+        <p>The client's ask was specific: club members should be able to say yes or no to a ride from the club's own home feed, without tapping into the full event page first — the two-step "open event → fill registration" pattern was too much friction for something that, for a club's own ride, is really just a headcount.</p>
+        <p>The trap: not every event on a club's page is actually the club's own ride. Club organisers can browse other clubs' events and pin them to their own club's home feed too — a way of pointing members toward a good ride happening elsewhere. But those events are frequently paid, with registration and payment happening through the organising club's own external process. A one-tap "yes" can't complete a payment, so offering one there would visually promise something the interaction can't actually deliver.</p>
+        <p>The resolution is structural, not just visual: the event card component carries an optional inline Ja / Misschien / Nee (Yes / Maybe / No) control, shown only for the club's own free-to-join rides. When a card instead links to another club's (typically paid) event, it shows that organising club's name and avatar in place of the RSVP row, and the member gets the standard flow: tap through, see the full event, register and pay properly. Same card component, same list, the shortcut only offered where a tap can actually finish the job.</p>
+      </div>
+
+      <div className="imgblock"><div style={{aspectRatio: '16/10'}}><image-slot id="ntfu-club-events" shape="rect" placeholder="Drop: Club details — Clubritten tab, event list with inline Ja/Misschien/Nee on own-club rides" style={{width:'100%',height:'100%'}}></image-slot></div></div>
+
+      <div id="ownership" className="section">
+        <p className="eyebrow">A second, related fork</p>
+        <h2>Whose event is it, really?</h2>
+        <p>The same "who owns this ride" question shows up one layer out. A bike ride can be a public NTFU event anyone can register for, and a specific club wants to feature it on their own club's home feed — both true of the same event. Rather than build two parallel flows (a generic event registration path and a separate club-ride path), the two stayed as one: a member finds and registers for any event through the same discovery-and-registration flow, and separately, a club admin can pin a public event onto their own club's feed with a single "add to club rides" action. The event doesn't get duplicated or redesigned for club context — it just gets surfaced there, still carrying its own registration/payment terms. That's the same distinction the RSVP shortcut above is drawing: a pinned external event stays external, and the interface doesn't pretend otherwise.</p>
+      </div>
+
+      <div className="imgblock"><div style={{aspectRatio: '16/10'}}><image-slot id="ntfu-discovery" shape="rect" placeholder="Drop: Event discovery map with filters; event detail with route, elevation profile, ratings" style={{width:'100%',height:'100%'}}></image-slot></div></div>
+
+      <div id="friction" className="section">
+        <p className="eyebrow">Registering shouldn't need a printer</p>
+        <h2>Two smaller decisions did more for signup friction than any redesign</h2>
+        <div className="numbered">
+          <div><div className="n">01</div><div className="t">Pricing rewards deciding early</div><div className="d">Every event shows two price tiers side by side — a lower rate for registering in advance, a higher one for turning up and paying on the day, with a further discount for PLUS members on both. Making the cost of indecision visible on the same screen as the registration button, rather than as a surprise at checkout, was a deliberate nudge toward the behaviour that actually helps organisers plan (knowing headcount ahead of time).</div></div>
+          <div><div className="n">02</div><div className="t">Scan &amp; Go replaces the paper confirmation</div><div className="d">Once registered, there's nothing to print and nothing to remember — a QR code in the app is scanned at the start line. For a federation whose events are frequently outdoors, unstaffed at check-in, and attended by people who've been cycling since well before the app existed, removing a physical step mattered more than any visual polish on the registration form itself.</div></div>
+        </div>
+      </div>
+
+      <div className="imgblock"><div style={{aspectRatio: '16/10'}}><image-slot id="ntfu-pricing" shape="rect" placeholder="Drop: Pricing tiers and Scan &amp; Go explanation; registration confirmation" style={{width:'100%',height:'100%'}}></image-slot></div></div>
+
+      <div id="outcome" className="section">
+        <p className="eyebrow">Outcome</p>
+        <h2>What this shows</h2>
+        <ul className="outcome">
+          <li>Full Phase 2 interaction design complete: event discovery, registration and tiered pricing, Scan &amp; Go check-in, club-ride endorsement, inline own-club RSVP, and the post-ride rating flow.</li>
+          <li>Currently with the client for feedback; development running in parallel.</li>
+          <li>Built to a hard constraint (dashboard content is read-only in-app) without that constraint becoming visible to the member using the app.</li>
+        </ul>
+        <p>This wasn't a green-field problem — the requirements came from the client's own survey of 84 clubs and two working sessions with 15 of them, and the job was to turn that into something a cyclist could actually use without thinking about it. The interesting design decisions here weren't about visual polish; they were about knowing when a shortcut is safe to offer (an inline yes only where a real registration already stands behind it) and where to merge two things that looked like they needed separate flows (public event vs. club ride) — while keeping an invisible constraint (dashboard-owned data) from ever surfacing as a limitation to the person holding the phone.</p>
+      </div>
+
+      <div className="next">
+        <a href="#"><div className="cap">Next project</div><div className="ttl">CoMaze</div></a>
+        <a href="#"><div className="cap">Next project</div><div className="ttl">City Bingo</div></a>
+      </div>
+
+      <Footer name="Sichen Guo" year={2026} />
+    </div>
+  );
+}
+
+ReactDOM.createRoot(document.getElementById('root')).render(<CaseStudy />);
+setTimeout(() => {
+  const map = {Work:'index.html#work',About:'about.html',Contact:'mailto:sichen.guo.work@gmail.com'};
+  document.querySelectorAll('nav a').forEach(a => { if (map[a.textContent]) a.href = map[a.textContent]; });
+  document.querySelectorAll('a').forEach(a => { if (a.textContent === 'Back to projects') a.href = 'index.html#work'; });
+}, 0);
+</script>
+</body>
+</html>

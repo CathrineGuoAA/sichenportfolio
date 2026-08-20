@@ -22,6 +22,8 @@ body{margin:0;background:var(--surface-page)}
 .wip-overlay{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:var(--ink-1,#1a1a1a);opacity:0;transition:opacity 200ms ease}
 .wip-overlay span{font-family:var(--font-mono);font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:#fff}
 .wip-card:hover .wip-overlay{opacity:.9}
+.gated-card{cursor:pointer}
+.gated-card:hover .gated-overlay{opacity:.9}
 @media (prefers-reduced-motion:reduce){.wip-overlay{transition:none}}
 </style>
 </head>
@@ -32,49 +34,80 @@ const { NavBar, ProjectCard, AnnotatedWord, ArrowLink, Footer } = window.Elizabe
 
 const projects = [
   { id: 'p1', caption: 'Mijke—AI guidance tool for people with limited literacy, evaluated with MatchEval', slot: 'thumb-1', src: 'uploads/slot-thumb-1.webp', href: 'case-study-mijke.html' },
-  { id: 'p2', caption: 'AI Text Simplification—Making institutional text legible for low-literacy readers', slot: 'thumb-2', src: 'uploads/slot-thumb-2.webp', href: '#' },
-  { id: 'p3', caption: 'MediaMasters—Web teaching simulation used in 3,500+ Dutch primary schools', slot: 'thumb-3', src: 'uploads/slot-thumb-3.webp', href: '#' },
+  { id: 'p2', caption: 'CoMaze -A VR study exploring how avatar identity shapes the way people connect', slot: 'thumb-2', src: 'uploads/slot-thumb-2.webp', href: '#' },
+  { id: 'p3', caption: 'City Bingo -A gamified welcome experience for Eindhoven newcomers — physical bingo card meets city exploration app', slot: 'thumb-3', src: 'uploads/slot-thumb-3.webp', href: '#' },
+  { id: 'p4', caption: 'NTFU—Fietssport App: getting a club cyclist from "I want to ride this" to "I\'m signed up" in as few decisions as possible', slot: 'thumb-4', src: 'uploads/slot-thumb-4.png', href: 'case-study-ntfu.html', gated: true },
 ];
 
+const NTFU_PASSWORD = '1209';
+
+function PasswordModal({ href, onClose }) {
+  const [value, setValue] = React.useState('');
+  const [error, setError] = React.useState(false);
+  const submit = (e) => {
+    e.preventDefault();
+    if (value === NTFU_PASSWORD) { sessionStorage.setItem('ntfu-unlocked', '1'); window.location.href = href; }
+    else setError(true);
+  };
+  return (
+    <div style={{position:'fixed',inset:0,background:'rgba(0,0,0,.4)',display:'flex',alignItems:'center',justifyContent:'center',zIndex:20}} onClick={onClose}>
+      <form onSubmit={submit} onClick={e => e.stopPropagation()} style={{background:'var(--surface-page,#fff)',padding:32,width:320,display:'flex',flexDirection:'column',gap:12,border:'1px solid var(--line,#ddd)'}}>
+        <div style={{fontSize:'var(--fs-body)',color:'var(--ink-1)',fontWeight:600}}>Password required</div>
+        <p style={{fontSize:'var(--fs-caption,13px)',color:'var(--ink-2,#555)',margin:0}}>This client project is under NDA. Enter the password to view it.</p>
+        <input type="password" autoFocus value={value} onChange={e => {setValue(e.target.value); setError(false);}} placeholder="Password" style={{padding:'10px 12px',border:'1px solid var(--line,#ddd)',fontSize:'var(--fs-body)',fontFamily:'var(--font-sans)'}} />
+        {error && <div style={{fontSize:'var(--fs-caption,13px)',color:'var(--accent)'}}>Incorrect password.</div>}
+        <div style={{display:'flex',gap:8,justifyContent:'flex-end'}}>
+          <button type="button" onClick={onClose} style={{padding:'8px 14px',border:'1px solid var(--line,#ddd)',background:'none',fontFamily:'var(--font-sans)',cursor:'pointer'}}>Cancel</button>
+          <button type="submit" style={{padding:'8px 14px',border:'1px solid var(--ink-1)',background:'var(--ink-1)',color:'var(--surface-page,#fff)',fontFamily:'var(--font-sans)',cursor:'pointer'}}>Enter</button>
+        </div>
+      </form>
+    </div>
+  );
+}
+
 function Home() {
+  const [gateHref, setGateHref] = React.useState(null);
   return (
     <div style={{fontFamily: 'var(--font-sans)', maxWidth: 1000, margin: '0 auto', background: 'var(--surface-page)'}}>
       <NavBar name="Sichen Guo" links={["Work","About","Contact"]} activeIndex={-1} />
       <div id="work" style={{padding: '80px 36px 60px', maxWidth: 680}}>
         <div style={{width: 92, height: 116, marginBottom: 28}}>
-          <image-slot id="portrait" src="uploads/slot-portrait.webp" shape="rect" placeholder="Drop portrait photo" style={{width:'100%',height:'100%'}}></image-slot>
+          <image-slot id="portrait" src="uploads/slot-portrait.png" shape="rect" placeholder="Drop portrait photo" style={{width:'100%',height:'100%',filter:'saturate(0.85) hue-rotate(8deg) contrast(1.05)'}}></image-slot>
         </div>
         <p style={{fontSize: 'var(--fs-lede)', lineHeight: 'var(--lh-lede)', letterSpacing: 'var(--tracking-tight)', margin: '0 0 8px', color: 'var(--ink-1)'}}>
-          sichen guo is a product <AnnotatedWord>designer</AnnotatedWord> with a research edge—working at the intersection of AI and human-centered design.
+          Sichen guo is a product <AnnotatedWord>designer</AnnotatedWord> with a research edge—working at the intersection of AI and human-centered design.
         </p>
         <p style={{fontSize: 'var(--fs-lede)', lineHeight: 'var(--lh-lede)', letterSpacing: 'var(--tracking-tight)', margin: '0 0 24px', color: 'var(--ink-1)'}}>
-          currently a UI/UX designer Intern <a href="#">@DTT</a>, and UX researcher <a href="https://eindhovenengine.nl/">@Eindhoven Engine</a>, based in Veldhoven, NL. Also an EngD in Human-AI Interaction <a href="#">@Eindhoven University of Technology</a>.
+          currently a UI/UX designer Intern <a href="https://www.d-tt.nl/en">@DTT</a>, and UX researcher <a href="https://eindhovenengine.nl/">@Eindhoven Engine</a>, based in Veldhoven, NL. Also an EngD in Human-AI Interaction <a href="#">@Eindhoven University of Technology</a>.
         </p>
         <div style={{display: 'flex', alignItems: 'center', gap: 20, flexWrap: 'wrap'}}>
           <ArrowLink direction="down">Explore a few featured projects</ArrowLink>
           <a className="resume-link" href="Sichen-Guo-CV.pdf" target="_blank">Resume ↗</a>
         </div>
       </div>
-      <div style={{display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 1, background: 'var(--line,#ddd)', border: '1px solid var(--line,#ddd)'}}>
+      <div style={{display: 'grid', gridTemplateColumns: '1fr 1fr', gridTemplateRows: 'auto auto', gap: 1, background: 'var(--line,#ddd)', border: '1px solid var(--line,#ddd)'}}>
         {projects.map(p => (
           <div key={p.id} style={{display:'contents'}}>
-            <ProjectCardSlot caption={p.caption} slotId={p.slot} slotSrc={p.src} href={p.href} />
+            <ProjectCardSlot caption={p.caption} slotId={p.slot} slotSrc={p.src} href={p.href} gated={p.gated} onGated={() => setGateHref(p.href)} />
           </div>
         ))}
       </div>
       <Footer name="Sichen Guo" year={2026} />
+      {gateHref && <PasswordModal href={gateHref} onClose={() => setGateHref(null)} />}
     </div>
   );
 }
 
-function ProjectCardSlot({ caption, slotId, slotSrc, href }) {
+function ProjectCardSlot({ caption, slotId, slotSrc, href, gated, onGated }) {
   const wip = !href || href === '#';
-  const Tag = wip ? 'div' : 'a';
+  const Tag = wip ? 'div' : (gated ? 'div' : 'a');
+  const onClick = gated ? (e) => { e.preventDefault(); onGated(); } : undefined;
   return (
-    <Tag {...(wip ? {} : {href})} className={wip ? 'wip-card' : ''} style={{display:'block',textDecoration:'none',background:'var(--surface-page,#fff)',position:'relative',cursor: wip ? 'default' : 'pointer'}}>
+    <Tag {...(wip || gated ? {} : {href})} onClick={onClick} className={wip ? 'wip-card' : (gated ? 'gated-card' : '')} style={{display:'block',textDecoration:'none',background:'var(--surface-page,#fff)',position:'relative',cursor: wip ? 'default' : 'pointer'}}>
       <div style={{width: '100%', aspectRatio: '16/10', position:'relative', overflow:'hidden'}}>
         <image-slot id={slotId} src={slotSrc} shape="rect" placeholder="Drop project thumbnail" style={{width:'100%',height:'100%'}}></image-slot>
         {wip && <div className="wip-overlay"><span>Work in progress</span></div>}
+        {gated && <div className="wip-overlay gated-overlay"><span>🔒 Password required</span></div>}
       </div>
       <div style={{padding: '12px 14px', fontSize: 'var(--fs-caption,13px)', color: 'var(--ink-2,#555)'}}>{caption}</div>
     </Tag>

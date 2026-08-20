@@ -20,33 +20,56 @@ body{margin:0;background:var(--surface-page)}
 .wrap{padding:0 36px}
 .rail{position:fixed;right:28px;top:50%;transform:translateY(-50%);z-index:5;display:flex;flex-direction:column;gap:14px;opacity:0;pointer-events:none;transition:opacity 200ms ease}
 .rail.visible{opacity:1;pointer-events:auto}
-.rail a{display:flex;align-items:center;gap:10px;font-family:var(--font-mono);font-size:10px;letter-spacing:.06em;text-transform:uppercase;text-decoration:none;color:var(--ink-3);font-weight:400;transition:color 200ms ease,font-weight 200ms ease}
-.rail a::before{content:'';width:12px;height:1px;background:var(--line-2);transition:background 200ms ease,width 200ms ease}
-.rail a.active{color:var(--accent);font-weight:700;text-decoration:underline;text-underline-offset:3px}
-.rail a.active::before{background:var(--accent);width:20px}
-@media (max-width:1024px){.rail{display:none}}
+.rail a{display:flex;align-items:center;gap:10px;font-family:var(--font-mono);font-size:10px;letter-spacing:.06em;text-transform:uppercase;text-decoration:none;color:var(--ink-3);font-weight:400;transition:color 200ms ease}
+.rail a::before{content:'';width:16px;height:1px;background:var(--line-2);transition:background 200ms ease,width 200ms ease;flex-shrink:0}
+.rail a.active{color:var(--accent);font-weight:500}
+.rail a.active::before{background:var(--accent);width:22px}
+.rail .group-label{font-family:var(--font-mono);font-size:9px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-3);opacity:.6;margin:4px 0 -2px 26px}
 @media (prefers-reduced-motion:reduce){.rail,.rail a,.rail a::before{transition:none}}
-.meta{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-bottom:40px}
-.meta .lbl{font-size:var(--fs-caption);color:var(--text-caption);margin-bottom:4px}
-.meta .val{font-size:var(--fs-small);color:var(--text-body)}
+.meta{display:grid;grid-template-columns:repeat(4,1fr);gap:0;margin-bottom:48px;padding-top:32px;border-top:1px solid var(--border-default)}
+.meta>div{padding:0 28px;border-left:1px solid var(--border-default)}
+.meta>div:first-child{padding-left:0;border-left:none}
+.meta .team-item{display:flex;flex-direction:column;gap:2px}
+.meta .team-item+.team-item{margin-top:14px}
+.meta .lbl{font-size:var(--fs-caption);color:var(--text-caption);margin-bottom:10px;text-transform:uppercase;letter-spacing:.04em}
+.meta .val{font-size:var(--fs-small);color:var(--text-body);line-height:1.6}
+@media (max-width:800px){.meta{grid-template-columns:repeat(2,1fr);row-gap:28px}.meta>div{border-left:none;padding:0}}
 .section{padding:64px 36px;display:flex;flex-direction:column;gap:16px;border-top:1px solid var(--border-default)}
 .eyebrow{font-size:var(--fs-caption);color:var(--text-caption);text-transform:uppercase;letter-spacing:.04em;margin:0}
-.section h2{font-size:var(--fs-h2);font-weight:var(--fw-semibold);margin:0;color:var(--ink-1);max-width:640px}
+.section h2{font-size:var(--fs-h2);font-weight:var(--fw-semibold);margin:0;color:var(--ink-1)}
 .section p{font-size:var(--fs-body);line-height:var(--lh-body);color:var(--text-body);margin:0}
 .imgblock{padding:0 36px 48px}
 .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:8px}
 .stat .num{font-size:var(--fs-h2);font-weight:var(--fw-semibold);color:var(--ink-1)}
+.stat .num.stat-reveal{opacity:0;transform:translateY(8px);transition:opacity 500ms ease,transform 500ms ease}
+.stat .num.stat-reveal.in-view{opacity:1;transform:translateY(0)}
+.stat-inline{font-weight:var(--fw-semibold);color:var(--accent);opacity:0;transition:opacity 450ms ease}
+.stat-inline.in-view{opacity:1}
+.count-up{font-variant-numeric:tabular-nums}
+@media (prefers-reduced-motion:reduce){.stat .num.stat-reveal,.stat-inline{opacity:1;transform:none;transition:none}}
 .stat .lbl{font-size:var(--fs-caption);color:var(--text-caption);margin-top:4px}
 .numbered{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:8px}
 .numbered .n{font-size:var(--fs-caption);color:var(--text-caption)}
 .numbered .t{font-size:var(--fs-small);font-weight:var(--fw-semibold);color:var(--ink-1);margin:6px 0 4px}
 .numbered .d{font-size:var(--fs-caption);color:var(--text-body);line-height:1.5}
+.outcome{margin:0;padding-left:20px;display:flex;flex-direction:column;gap:10px}
+.outcome li{font-size:var(--fs-body);line-height:var(--lh-body);color:var(--text-body)}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:4px}
+.chip{font-family:var(--font-mono);font-size:11px;letter-spacing:.04em;text-transform:uppercase;padding:6px 12px;border:1px solid var(--border-default);border-radius:999px;color:var(--ink-2);opacity:0;transform:translateY(6px);transition:opacity 450ms ease,transform 450ms ease,border-color 200ms ease,color 200ms ease}
+.chip.in-view{opacity:1;transform:translateY(0)}
+.chip:hover{border-color:var(--accent);color:var(--accent)}
+@media (prefers-reduced-motion:reduce){.chip{transition:none;opacity:1;transform:none}}
+.bugs{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:4px}
+.bugcard{background:var(--surface-card);border:1px solid var(--border-default);border-radius:12px;padding:20px;display:flex;flex-direction:column;gap:6px}
+.bugcard .bignum{font-size:var(--fs-h2);font-weight:var(--fw-semibold);color:var(--accent)}
+.bugcard .bugtitle{font-size:var(--fs-small);font-weight:var(--fw-semibold);color:var(--ink-1)}
+.bugcard p{font-size:var(--fs-caption);color:var(--text-body);line-height:1.5;margin:0}
 .next{display:grid;grid-template-columns:1fr 1fr;gap:0}
 .next a{display:block;padding:32px 36px;text-decoration:none;border-top:1px solid var(--border-default)}
 .next a:nth-child(odd){border-right:1px solid var(--border-default)}
 .next .cap{font-size:var(--fs-caption);color:var(--text-caption);margin-bottom:6px}
 .next .ttl{font-size:var(--fs-h2);color:var(--ink-1)}
-@media (max-width:700px){.meta,.stats,.numbered{grid-template-columns:1fr}.next{grid-template-columns:1fr}.next a:nth-child(odd){border-right:none}}
+@media (max-width:700px){.meta,.stats,.numbered,.bugs{grid-template-columns:1fr}.next{grid-template-columns:1fr}.next a:nth-child(odd){border-right:none}}
 </style>
 </head>
 <body>
@@ -54,14 +77,24 @@ body{margin:0;background:var(--surface-page)}
 <script type="text/babel">
 const { NavBar, ArrowLink, Footer } = window.ElizabethWangPortfolioDesignSystem_cfd53e;
 
+const teamMembers = [
+  { name: 'Jessica Goss', role: 'Project Owner' },
+  { name: 'David Rozenberg', role: 'AWS Implementation' },
+];
+
 const sections = [
   { id: 'overview', label: 'Overview' },
   { id: 'problem', label: 'Problem' },
-  { id: 'research', label: 'Research & design' },
-  { id: 'turn', label: 'The turn' },
-  { id: 'evaluation', label: 'Evaluation' },
-  { id: 'lessons', label: 'Lessons' },
+  { id: 'phase1', label: 'Phase 1' },
+  { id: 'phase2', label: 'Phase 2' },
+  { id: 'phase3', label: 'Phase 3' },
+  { id: 'phase4', label: 'Phase 4' },
+  { id: 'phase5', label: 'Phase 5' },
+  { id: 'outcome', label: 'Outcome' },
+  { id: 'lessons', label: 'What this shows' },
 ];
+
+const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
 function ScrollRail() {
   const [active, setActive] = React.useState('overview');
@@ -69,31 +102,114 @@ function ScrollRail() {
   React.useEffect(() => {
     const bodyStart = document.getElementById('overview');
     const lessons = document.getElementById('lessons');
-    const io = new IntersectionObserver((entries) => {
-      entries.forEach(e => { if (e.isIntersecting) setActive(e.target.id); });
-    }, { rootMargin: '-40% 0px -50% 0px', threshold: 0 });
-    sections.forEach(s => { const el = document.getElementById(s.id); if (el) io.observe(el); });
+    const els = sections.map(s => document.getElementById(s.id)).filter(Boolean);
+    let raf = null;
+    const compute = () => {
+      const line = window.innerHeight * 0.45;
+      let current = els[0] ? els[0].id : 'overview';
+      for (const el of els) {
+        if (el.getBoundingClientRect().top <= line) current = el.id;
+      }
+      setActive(current);
+      if (bodyStart) {
+        const top = bodyStart.getBoundingClientRect().top;
+        const bottom = lessons ? lessons.getBoundingClientRect().bottom : Infinity;
+        setVisible(top < window.innerHeight * 0.5 && bottom > window.innerHeight * 0.2);
+      }
+    };
     const onScroll = () => {
-      if (!bodyStart) return;
-      const top = bodyStart.getBoundingClientRect().top;
-      const bottom = lessons ? lessons.getBoundingClientRect().bottom : Infinity;
-      setVisible(top < window.innerHeight * 0.5 && bottom > window.innerHeight * 0.2);
+      if (raf) return;
+      raf = requestAnimationFrame(() => { raf = null; compute(); });
     };
     window.addEventListener('scroll', onScroll, { passive: true });
-    onScroll();
-    return () => { io.disconnect(); window.removeEventListener('scroll', onScroll); };
+    compute();
+    return () => { window.removeEventListener('scroll', onScroll); if (raf) cancelAnimationFrame(raf); };
   }, []);
   const onClick = (e, id) => {
     e.preventDefault();
     const el = document.getElementById(id);
-    if (el) el.scrollIntoView({ behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth', block: 'start' });
+    if (el) el.scrollIntoView({ behavior: prefersReducedMotion ? 'auto' : 'smooth', block: 'start' });
   };
   return (
     <nav className={"rail" + (visible ? " visible" : "")} aria-label="Case study sections">
-      {sections.map(s => (
-        <a key={s.id} href={"#" + s.id} className={active === s.id ? 'active' : ''} onClick={(e) => onClick(e, s.id)}>{s.label}</a>
+      {sections.map((s,i) => (
+        <React.Fragment key={s.id}>
+          {s.id === 'phase1' && <div className="group-label">Research & Design Process</div>}
+          <a href={"#" + s.id} className={active === s.id ? 'active' : ''} onClick={(e) => onClick(e, s.id)}>{s.label}</a>
+        </React.Fragment>
       ))}
     </nav>
+  );
+}
+
+function Stat({ children }) {
+  const ref = React.useRef(null);
+  const [inView, setInView] = React.useState(false);
+  React.useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const io = new IntersectionObserver(([e]) => { if (e.isIntersecting) { setInView(true); io.disconnect(); } }, { threshold: 0.6 });
+    io.observe(el);
+    return () => io.disconnect();
+  }, []);
+  return <span ref={ref} className={"stat-inline" + (inView ? " in-view" : "")}>{children}</span>;
+}
+
+function StatBlock({ n, label }) {
+  const ref = React.useRef(null);
+  const [inView, setInView] = React.useState(false);
+  React.useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const io = new IntersectionObserver(([e]) => { if (e.isIntersecting) { setInView(true); io.disconnect(); } }, { threshold: 0.6 });
+    io.observe(el);
+    return () => io.disconnect();
+  }, []);
+  return <div className="stat"><div ref={ref} className={"num stat-reveal" + (inView ? " in-view" : "")}>{n}</div><div className="lbl">{label}</div></div>;
+}
+
+// Counts a number up from 0 when it scrolls into view. Falls back to the
+// final value instantly under prefers-reduced-motion.
+function CountUp({ value, decimals = 0, suffix = '', duration = 900 }) {
+  const ref = React.useRef(null);
+  const [display, setDisplay] = React.useState(prefersReducedMotion ? value.toFixed(decimals) : (0).toFixed(decimals));
+  React.useEffect(() => {
+    const el = ref.current;
+    if (!el || prefersReducedMotion) return;
+    const io = new IntersectionObserver(([e]) => {
+      if (!e.isIntersecting) return;
+      io.disconnect();
+      const start = performance.now();
+      const tick = (now) => {
+        const p = Math.min(1, (now - start) / duration);
+        const eased = 1 - Math.pow(1 - p, 3);
+        setDisplay((value * eased).toFixed(decimals));
+        if (p < 1) requestAnimationFrame(tick);
+      };
+      requestAnimationFrame(tick);
+    }, { threshold: 0.6 });
+    io.observe(el);
+    return () => io.disconnect();
+  }, [value, decimals, duration]);
+  return <span ref={ref} className="count-up">{display}{suffix}</span>;
+}
+
+function Chips({ items }) {
+  const ref = React.useRef(null);
+  const [inView, setInView] = React.useState(prefersReducedMotion);
+  React.useEffect(() => {
+    const el = ref.current;
+    if (!el || prefersReducedMotion) return;
+    const io = new IntersectionObserver(([e]) => { if (e.isIntersecting) { setInView(true); io.disconnect(); } }, { threshold: 0.4 });
+    io.observe(el);
+    return () => io.disconnect();
+  }, []);
+  return (
+    <div ref={ref} className="chips">
+      {items.map((item, i) => (
+        <span key={item} className={"chip" + (inView ? " in-view" : "")} style={{ transitionDelay: (i * 60) + 'ms' }}>{item}</span>
+      ))}
+    </div>
   );
 }
 
@@ -107,71 +223,131 @@ function CaseStudy() {
         <ArrowLink direction="up">Back to projects</ArrowLink>
         <h1 style={{fontSize: 'var(--fs-h1)', fontWeight: 'var(--fw-semibold)', letterSpacing: 'var(--tracking-tight)', margin: '20px 0 8px', color: 'var(--ink-1)'}}>Mijke</h1>
         <p style={{fontSize: 'var(--fs-lede)', lineHeight: 'var(--lh-lede)', color: 'var(--text-muted)', margin: '0 0 32px'}}>
-          an AI-powered guidance tool helping people with limited literacy navigate Dutch social services through conversation, not forms.
+          An AI chatbot that matches adults with limited basic skills to the right social services through conversation.
         </p>
         <div className="meta">
-          <div><div className="lbl">Role</div><div className="val">UX/AI Designer & EngD Researcher</div></div>
-          <div><div className="lbl">Team</div><div className="val">Cross-functional squad — engineers, domain experts, policymakers</div></div>
-          <div><div className="lbl">Timeline</div><div className="val">Sep 2023 — present</div></div>
+          <div><div className="lbl">Role</div><div className="val">UX Researcher ·<br/>Evaluation & Conversation Design</div></div>
+          <div><div className="lbl">Timeline</div><div className="val">Sep 2023 – Mar 2026<br/>EngD Graduation Project<br/><br/>2026 – Present<br/>Continued Research under MRE</div></div>
+          <div><div className="lbl">Tools</div><div className="val">Figma<br/>React / TypeScript<br/>LLMs · Python · AWS · Vapi</div></div>
+          <div><div className="lbl">Teams</div><div className="val">{teamMembers.map((m,i) => <div key={i} className="team-item">{m.name}<br/>{m.role}</div>)}</div></div>
         </div>
       </div>
 
-      <div className="imgblock"><div style={{aspectRatio: '16/9'}}><image-slot id="mijke-hero" src="uploads/slot-mijke-hero.webp" shape="rect" placeholder="Drop product screenshot" style={{width:'100%',height:'100%'}}></image-slot></div></div>
+      <div className="imgblock"><div style={{aspectRatio: '16/9'}}><image-slot id="mijke-hero" src="uploads/slot-mijke-hero.webp" shape="rect" placeholder="Drop: Mijke UI — WhatsApp chat interface, results screen" style={{width:'100%',height:'100%'}}></image-slot></div></div>
 
       <div id="overview" className="section">
         <p className="eyebrow">Overview</p>
-        <h2>Making social services reachable in plain conversation</h2>
-        <p>About 3 million adults in the Netherlands have low literacy and struggle to navigate social services through forms and category menus. Mijke is a chatbot that lets them ask for help in plain conversation instead.</p>
-        <p>Getting the bot to respond wasn't the hard part — knowing whether its responses were good enough to act on was. That question shaped most of the project.</p>
+        <h2>A conversation instead of a form</h2>
+        <p>Mijke is a multimodal AI chatbot that helps adults with limited basic skills in the Netherlands navigate social services through conversation, not forms.</p>
+        <p>Mijke's concept and initial GPT-4/WhatsApp direction were set by a teammate, Jessica Goss, before I joined. My EngD thesis operationalised the team's first concept prototype into a maintainable, evaluated system — and after my supervisor doubted an LLM could judge Mijke's answers rigorously enough, I built MatchEval to prove otherwise.</p>
       </div>
 
       <div id="problem" className="section">
-        <p className="eyebrow">Problem</p>
-        <h2>Comprehension was the assumed barrier</h2>
-        <p>The starting hypothesis was that low-literacy users struggled with the language social services used — dense, formal, hard to parse. Mijke's first job was to translate that language into something conversational.</p>
+        <p className="eyebrow">The problem</p>
+        <h2>Existing service directories assume you can already help yourself</h2>
+        <p>Around 3 million adults in the Netherlands have limited basic skills. Navigating social services means reading complex pages and filling in forms — an impossible barrier for this population. Mijke is designed for everyone else.</p>
       </div>
 
-      <div id="research" className="section">
-        <p className="eyebrow">Research & design</p>
-        <h2>Testing that assumption with real users</h2>
-        <p>I led user research and interaction design for the tool: structured interviews, usability tests, and cognitive walkthroughs with around 15 social practitioners. From that, I defined the information architecture and conversational flows for an LLM-driven interface, translating AI outputs into interaction patterns validated through testing, and iterated high-fidelity prototypes in Figma.</p>
-        <div className="numbered">
-          <div><div className="n">01</div><div className="t">Structured interviews</div><div className="d">With social practitioners who support low-literacy clients day to day.</div></div>
-          <div><div className="n">02</div><div className="t">Usability testing</div><div className="d">Task-based sessions on the conversational flow, not just the copy.</div></div>
-          <div><div className="n">03</div><div className="t">Cognitive walkthroughs</div><div className="d">Step-by-step review of where users hesitated or dropped off.</div></div>
-        </div>
-      </div>
-
-      <div id="turn" className="section">
-        <p className="eyebrow">The turn</p>
-        <h2>Task performance rose. Accuracy didn't.</h2>
-        <p>Phase 1 testing showed task performance rising sharply while accuracy stayed flat. That gap pointed away from the assumption we'd started with — that the barrier was comprehension — and toward the real one: anxiety about engaging with the letter at all. That reframed the design direction, from simplifying language toward reducing anxiety and building trust before comprehension could even matter.</p>
-      </div>
-
-      <div className="imgblock"><div style={{aspectRatio: '16/10'}}><image-slot id="mijke-matcheval" shape="rect" placeholder="Drop MatchEval screenshot" style={{width:'100%',height:'100%'}}></image-slot></div></div>
-
-      <div id="evaluation" className="section">
-        <p className="eyebrow">Evaluation</p>
-        <h2>MatchEval: judging the AI, not just the interface</h2>
-        <p>Design decisions about an LLM-driven tool needed a way to check whether its answers were actually good enough to act on. I built MatchEval, an LLM-as-judge platform that scores live conversations against five criteria defined with practitioners.</p>
+      <div id="phase1" className="section">
+        <p className="eyebrow">Research & Design Process — Phase 1</p>
+        <h2>Testing whether an LLM would actually help, not assuming it</h2>
+        <p>The Mijke team had already set GPT-4 as the engine before I joined, but we had not tested whether it actually helped this population. I designed and ran a study to find out: an "AI Doc Assistant" that turns scanned government letters into plain-language summaries, tested with <Stat>6 participants</Stat> with limited basic skills in a pre/post design.</p>
         <div className="stats">
-          <div className="stat"><div className="num">54%</div><div className="lbl">ground-truth match rate, latest run</div></div>
-          <div className="stat"><div className="num">28</div><div className="lbl">conversations evaluated</div></div>
-          <div className="stat"><div className="num">699</div><div className="lbl">organisations in the reference dataset</div></div>
+          <StatBlock n={<CountUp value={6} />} label="participants with limited basic skills" />
+          <StatBlock n="Higher" label="perceived effectiveness, efficiency, ease" />
+          <StatBlock n="Flat" label="objective comprehension accuracy" />
         </div>
-        <p>The result also shows where the system actually falls short: accuracy and trust, not language clarity — the gap the design work now needs to close.</p>
+        <p>The tool wasn't making people more correct — it was making them less afraid to open the letter at all.</p>
+        <p>This became my first peer-reviewed publication: <a href="https://rdcu.be/fAEep"><i>Leveraging AI for Low Literacy: Rethinking Interaction Accessibility Through Document Simplification</i> (Guo, Leborgne, Baets & Hu, 2026)</a>.</p>
+      </div>
+
+      <div className="imgblock"><div style={{aspectRatio: '16/10'}}><image-slot id="mijke-doc-assistant" shape="rect" placeholder="Drop: AI Doc Assistant prototype — letter upload flow, summarised output" style={{width:'100%',height:'100%'}}></image-slot></div></div>
+
+      <div id="phase2" className="section">
+        <p className="eyebrow">Phase 2</p>
+        <h2>Turning a concept prototype into a system that could survive contact with real data</h2>
+        <p>The existing prototype proved an LLM could hold a conversation; it could not yet ground that conversation in reliable local knowledge. I built Mijke's local knowledge base from the ground up, manually reviewing <Stat>130 annual reports</Stat> covering approximately <Stat>200 Eindhoven-region organisations</Stat>, and structured the resulting dataset across six skill domains defined by the Eindhoven Engine Inclusive Society Lab.</p>
+        <p>I defined the UX and research requirements for Mijke's backend architecture, co-designing the system with intern software engineer David Rozenberg, who built the AWS implementation. I then conducted expert interviews, redesigned the conversation flow, and prototyped a phone-based voice channel using Vapi alongside WhatsApp text, validated with a follow-up study — supporting a design direction in which text remains the primary interaction channel and voice is offered as an optional alternative.</p>
+        <div className="stats">
+          <StatBlock n={<CountUp value={4} />} label="social domain experts interviewed" />
+          <StatBlock n={<CountUp value={14} />} label="participants, voice follow-up study" />
+          <StatBlock n={<React.Fragment><Stat>4.79/5</Stat> · <Stat>4.25/5</Stat></React.Fragment>} label="ease of understanding · friendliness" />
+        </div>
+      </div>
+
+      <div className="imgblock"><div style={{aspectRatio: '16/10'}}><image-slot id="mijke-voice" shape="rect" placeholder="Drop: Voice prototype (Vapi) — call flow; WhatsApp voice message state; local organisation dataset" style={{width:'100%',height:'100%'}}></image-slot></div></div>
+
+      <div id="phase3" className="section">
+        <p className="eyebrow">Phase 3</p>
+        <h2>Building an honest first evaluation, then admitting it wasn't enough</h2>
+        <p>Once Mijke could answer, the question became whether its answers were good enough to trust. I ran two pilots and a workshop with <b>five social practitioners</b> to define what "good" meant, in practice:</p>
+        <Chips items={['Relevance', 'Trustworthiness', 'Accuracy', 'Clarity', 'Full match']} />
+        <p>I built a first LLM-as-judge MVP to apply those criteria automatically. I reported it exactly as it was in my thesis: promising for internal diagnostics, not a validated evaluator, since a <Stat><span style={{color:'var(--ink-1)'}}>12-person internal test</span></Stat> showed the ratings weren't stable enough to trust.</p>
+        <p>My supervisor was openly skeptical an LLM could judge Mijke rigorously enough. I didn't argue the point in the thesis — I graduated, then spent the months after proving it properly.</p>
+      </div>
+
+      <div className="imgblock"><div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:12,minWidth:0}}><div style={{aspectRatio:'4/3',minWidth:0,overflow:'hidden'}}><image-slot id="mijke-workshop" shape="rect" placeholder="Drop: Co-creation workshop with practitioners — dot-voting on evaluation criteria" style={{width:'100%',height:'100%'}}></image-slot></div><div style={{aspectRatio:'4/3',minWidth:0,overflow:'hidden'}}><image-slot id="mijke-workshop-2" shape="rect" placeholder="Drop: second workshop photo" style={{width:'100%',height:'100%'}}></image-slot></div></div></div>
+
+      <div id="phase4" className="section">
+        <p className="eyebrow">Phase 4 — after graduation</p>
+        <h2>Don't trust a judge you haven't cross-examined</h2>
+        <p>A golden set — real conversations scored by hand by experts, with a known correct ranking — became the test for my rebuilt judge before it touched real data. It immediately caught the judge lying: scores compressed into a narrow band, completely out of rank order.</p>
+        <p>Two bugs explained it:</p>
+        <div className="bugs">
+          <div className="bugcard">
+            <div className="bignum"><CountUp value={9.8} decimals={1} /></div>
+            <div className="bugtitle">Completeness, gamed</div>
+            <p>The criterion checked for contact fields, not whether the user's actual question got answered. One conversation scored a 9.8 despite never resolving what the user actually asked.</p>
+          </div>
+          <div className="bugcard">
+            <div className="bignum">0</div>
+            <div className="bugtitle">Zero internet access</div>
+            <p>Claude's fact-checker flagged real phone numbers as hallucinations, since it had no way to check them against the internet — unlike Gemini's search grounding.</p>
+          </div>
+        </div>
+        <p>I fixed both, then re-ran the golden set until the ranking matched the humans. <CountUp value={10} /> shipped fixes, before a single real conversation was scored.</p>
+      </div>
+
+      <div className="imgblock"><div style={{aspectRatio: '16/10'}}><image-slot id="mijke-validation" shape="rect" placeholder="Drop: Validation workshop — dot-voting wall; golden-set ranking comparison" style={{width:'100%',height:'100%'}}></image-slot></div></div>
+
+      <div id="phase5" className="section">
+        <p className="eyebrow">Phase 5 — after graduation</p>
+        <h2>What a judge you can trust actually finds</h2>
+        <p>Validated, I ran the judge against <CountUp value={28} /> live conversations on a <CountUp value={699} /> organisation dataset. Understandable Language (<Stat>8.68/10</Stat>) and Relevance (<Stat>8.14/10</Stat>) are strong — Mijke sounds right and stays on-topic. Accuracy (<Stat>5.79/10</Stat>) and Trustworthiness (<Stat>5.57/10</Stat>) are the weak points.</p>
+        <p>Two examples it caught: asked about a child's vocabulary, Mijke recommended "KIES bijeenkomsten" as a casual kids' group — actually a structured divorce-support programme requiring both parents' consent. Asked about a cooking activity, it recommended "Favorietjens" — actually an individual ADHD support service, not a group activity. Same pattern both times: confident, well-written, wrong about what the organisation does.</p>
+        <div className="stats">
+          <StatBlock n={<React.Fragment><CountUp value={54} />%</React.Fragment>} label="recommendation match rate vs. ground truth (15/28)" />
+          <StatBlock n="5.30 vs 7.00" label="Accuracy: self-serve vs. referral-required requests" />
+          <StatBlock n={<CountUp value={699} />} label="organisations in the reference dataset" />
+        </div>
+        <p>Self-serve requests score measurably worse than referral-required ones — the specific sub-population least safe to trust unsupervised. <Stat>54%</Stat> is an honest baseline, not a demo number.</p>
+      </div>
+
+      <div className="imgblock"><div style={{aspectRatio: '16/10'}}><image-slot id="mijke-dashboard" shape="rect" placeholder="Drop: MatchEval dashboard — per-criterion breakdown; example fact-check flag" style={{width:'100%',height:'100%'}}></image-slot></div></div>
+
+      <div id="outcome" className="section">
+        <p className="eyebrow">Outcome</p>
+        <h2>Where this stands</h2>
+        <ul className="outcome">
+          <li>Working multimodal chatbot (WhatsApp text + optional voice), grounded in a dataset of ~200 local organisations I built and structured.</li>
+          <li>A peer-reviewed publication, <i>Leveraging AI for Low Literacy</i> (2026), from the first phase of the work.</li>
+          <li>EngD thesis, <i>Operationalising Mijke the Match-Bot</i>, completed Mar 2026 — took Mijke from a first concept prototype to a maintainable, evaluated system.</li>
+          <li>MatchEval, an LLM-as-a-judge evaluation platform built and validated post-graduation — proving out an approach my own EngD supervisor doubted could be made rigorous enough, with 10 shipped fixes to prove it, not just built and trusted on faith.</li>
+          <li>A concrete, evidence-backed next step: close the Accuracy/Trustworthiness gap for self-serve recommendations specifically, the segment the data shows is riskiest.</li>
+          <li>Secured continuation funding: Metropoolregio Eindhoven (UX Researcher & Designer) and an NWO KIC call starting 2027 (AI Technologist) — co-authored the subsidy proposal for both.</li>
+        </ul>
       </div>
 
       <div id="lessons" className="section">
-        <p className="eyebrow">Lessons</p>
-        <h2>Collaboration and where this stands</h2>
-        <p>The work ran inside a cross-functional Agile squad with engineers, domain experts, and policymakers — sprint planning, demos, and backlog refinement, not a solo design track.</p>
-        <p>This is ongoing EngD research at TU/e. The full account is written up in my thesis, <a href="https://www.tue.nl/en/news-and-events/news-overview/08-03-2026-a-new-way-to-navigate-social-services-with-everyday-language" target="_blank">Operationalising Mijke the Match-Bot</a> (TU/e, March 2026).</p>
+        <p className="eyebrow">What this shows</p>
+        <h2>Testing the assumption, not the demo</h2>
+        <p>This is the same instinct showing up twice, aimed at two different doubts. When GPT-4 was already the assumed engine with no evidence it would help this population, I designed and ran the study myself. It became my first publication. When my supervisor doubted an LLM could judge Mijke rigorously enough, I reported my first attempt exactly as unproven as it was. I graduated, then spent the months after settling the question properly: catching the judge lying on its first real test, tracing it to two specific bugs, fixing both before trusting a single verdict. I don't trust a design decision, or a judge, until I've made it prove itself. Every sample size here is small (n=4 to n=28) — I'd rather say that plainly than round it up.</p>
+        <p>The full account is written up in my thesis, <a href="https://www.tue.nl/en/news-and-events/news-overview/08-03-2026-a-new-way-to-navigate-social-services-with-everyday-language" target="_blank">Operationalising Mijke the Match-Bot</a> (TU/e, March 2026).</p>
       </div>
 
       <div className="next">
-        <a href="#"><div className="cap">Next project</div><div className="ttl">AI Text Simplification</div></a>
-        <a href="#"><div className="cap">Next project</div><div className="ttl">MediaMasters</div></a>
+        <a href="#"><div className="cap">Next project</div><div className="ttl">CoMaze</div></a>
+        <a href="#"><div className="cap">Next project</div><div className="ttl">City Bingo</div></a>
       </div>
 
       <Footer name="Sichen Guo" year={2026} />
